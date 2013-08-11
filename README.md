@@ -8,7 +8,10 @@ This is a CPU and GPU implementation of a simple pattern classification applicat
 
 Both the GPU and CPU version go through the entire data set, examines the last 'periods_back' time intervals(including the most recent 5 min period), classify this period into (2^12) or 4096 possible pattern types(states). 
 
-At that point it not only caches the classification for that current pattern, but also looks forward 'periods forward' steps. Then based on what happened those next periods, it calculates the overall net average price change which is associated with that particular price/volatility pattern, and stores that information in memory.
+At that point it not only caches the classification for that current pattern, but also looks forward 'periods forward' steps. Then based on what happened those next periods, it calculates the overall net average price change which is associated with that particular price/volatility pattern, and stores that information in memory.  
+
+So essentially the code 'trains' on the past data, then that cached information can be used to evaluate the current state, and based on previous data predict the expected price change for the next 4-interval period.  
+
 
 This version demonstrates the fast and easy use of Atomic functions, which have been significanly improved in the newer Nvidia Kepler class GPUs. It also demonstrates the increased speed of Global memory access, which has also been improved in this new generation of Nvidia GPUs.
  
