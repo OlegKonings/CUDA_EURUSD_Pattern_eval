@@ -3,6 +3,7 @@ CUDA_EURUSD_Pattern_eval
 
 __Currency_state_evaluation__
 
+UPDATE: Added a brute-force parameter optimization step which determines the threshold(%) for a long trade trigger, the threshold(%) for a short trade trigger, the optimal % stop loss trigger, the the optimal % profit target.  The Overall profit(in ticks) is slightly different between the CPU and GPU version, but the parameters are equal. The small difference may be due to the multiple operations on very small (1e-5) floating point numbers.
 
 This is a CPU and GPU implementation of a simple pattern classification application which takes in 5 min EURUSD data.
 
@@ -15,8 +16,9 @@ At that point it not only caches the classification for that current pattern, bu
 So essentially the code 'trains' on the past data, then that cached information can be used to evaluate the current state, and based on previous data predict the expected price change for the next 4-interval period.  
 
 
-This version demonstrates the fast and easy use of Atomic functions, which have been significanly improved in the newer Nvidia Kepler class GPUs. It also demonstrates the increased speed of Global memory access, which has also been improved in this new generation of Nvidia GPUs.
- 
+This version demonstrates the fast and easy use of Atomic functions, which have been significanly improved in the newer Nvidia Kepler class GPUs. It also demonstrates the increased speed of Global memory access, which has also been improved in this new generation of Nvidia GPUs.  
+
+ __Fill/Scale Steps Only__
  ____
 
 <table>
@@ -30,7 +32,23 @@ This version demonstrates the fast and easy use of Atomic functions, which have 
 </table>
 
   ___
+  
+  
+__Fill/Scale With 4-Parameter Optimization__  
 
+___
+<table>
+  <tr>
+    <th>Number of time periods(5 min)</th><th>Periods back</th><th>Periods forward</th><th>CPU time</th><th>GPU time</th><th>Speedup</th>
+  </tr>
+  <tr>
+    <td>230,422</td><td>9 </td><td>4 </td><td>166322 ms</td><td>2890ms</td><td>57 x</td>
+  </tr>
+  
+</table>
+___
+  
+  
 While this is not a task which is ideal for the GPU, it still is able to fully process and fill in all of the 5-min data for a 4 year period in less than 1 ms, compared to about 38 ms for the equivalent CPU version.
 
 Since HFT trading is very dependant on the speed of the application, a more robust version of this prototype CUDA kernel could be used to output a future expected price change based on the most current state, and the history associated with this state.
