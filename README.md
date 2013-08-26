@@ -79,3 +79,5 @@ motherboard: MAXIMUS V GENE, PCI-e 3.0
   ga('send', 'pageview');
 
 </script>
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/78ee74ab95472114c2b348c352469307 "githalytics.com")](http://githalytics.com/OlegKonings/CUDA_EURUSD_Pattern_eval)
